@@ -1,6 +1,8 @@
-DROP TABLE IF EXISTS stat_subject;
+DROP TABLE IF EXISTS item_subject;
 
-DROP TABLE IF EXISTS monthly_checkouts_per_item;
+DROP TABLE IF EXISTS checkouts_per_month;
+
+DROP TABLE IF EXISTS item;
 
 DROP TABLE IF EXISTS usage_class;
 
@@ -48,13 +50,10 @@ CREATE TABLE subject (
 );
 
 -- Create monthly checkouts per item table
-CREATE TABLE monthly_checkouts_per_item (
+CREATE TABLE item (
     id serial,
     usage_class_id int NOT NULL,
     material_type_id int NOT NULL,
-    checkout_year int NOT NULL,
-    checkout_month int NOT NULL,
-    checkouts int NOT NULL,
     title varchar(750) NOT NULL,
     creator_id int,
     publisher_id int,
@@ -62,20 +61,28 @@ CREATE TABLE monthly_checkouts_per_item (
     PRIMARY KEY(id),
     CONSTRAINT fk_usage_class FOREIGN KEY(usage_class_id) REFERENCES usage_class(id) ON DELETE RESTRICT,
     CONSTRAINT fk_material_type FOREIGN KEY(material_type_id) REFERENCES material_type(id) ON DELETE RESTRICT,
-    CONSTRAINT fk_creator FOREIGN KEY(creator_id) REFERENCES creator(id) ON DELETE
-    SET
-        NULL,
-        CONSTRAINT fk_publisher FOREIGN KEY(publisher_id) REFERENCES publisher(id) ON DELETE
-    SET
-        NULL
+    CONSTRAINT fk_creator FOREIGN KEY(creator_id) REFERENCES creator(id) ON DELETE SET NULL,
+    CONSTRAINT fk_publisher FOREIGN KEY(publisher_id) REFERENCES publisher(id) ON DELETE SET NULL
 );
 
 -- Create item subject table
-CREATE TABLE stat_subject (
-    stat_id int NOT NULL,
+CREATE TABLE item_subject (
+    item_id int NOT NULL,
     subject_id int NOT NULL,
-    PRIMARY KEY(stat_id, subject_id),
-    CONSTRAINT fk_stat FOREIGN KEY(stat_id) REFERENCES monthly_checkouts_per_item(id) ON DELETE CASCADE,
-    CONSTRAINT fk_subject FOREIGN KEY(subject_id) REFERENCES subject(id) ON DELETE CASCADE,
-    UNIQUE(stat_id, subject_id)
+    PRIMARY KEY(item_id, subject_id),
+    CONSTRAINT fk_item_subject_item FOREIGN KEY(item_id) REFERENCES item(id) ON DELETE CASCADE,
+    CONSTRAINT fk_item_subject_subject FOREIGN KEY(subject_id) REFERENCES subject(id) ON DELETE CASCADE,
+    UNIQUE(item_id, subject_id)
+);
+
+-- Create checkouts per month table
+CREATE TABLE checkouts_per_month (
+    id SERIAL,
+    item_id int NOT NULL,
+    year int NOT NULL, 
+    month int NOT NULL,
+    checkouts int NOT NULL,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_checkouts_per_month_item FOREIGN KEY(item_id) REFERENCES item(id) ON DELETE CASCADE,
+    UNIQUE(item_id, year, month)
 );
