@@ -31,10 +31,29 @@ INSERT INTO usage_class (name) SELECT DISTINCT usage_class FROM monthly_checkout
 UPDATE monthly_checkouts_per_item_raw SET usage_class_id = 
 (SELECT usage_class.id FROM usage_class WHERE usage_class.name = monthly_checkouts_per_item_raw.usage_class);
 
+-- populate material_type table
+INSERT INTO material_type (name) SELECT DISTINCT material_type FROM monthly_checkouts_per_item_raw;
+
+----v  todo
+
+SELECT COUNT(DISTINCT creator) FROM monthly_checkouts_per_item_raw;
+
+-- populate creator table (got an issue with a null creator in here)
+INSERT INTO creator (name) SELECT DISTINCT creator FROM monthly_checkouts_per_item_raw;
+
+-- populate publisher table
+INSERT INTO publisher (name) SELECT DISTINCT publisher FROM monthly_checkouts_per_item_raw;
+
+-- insert material_type ids into raw table
+-- insert creator ids into raw table
+-- insert publisher ids into raw table
+UPDATE monthly_checkouts_per_item_raw 
+  SET
+    material_type_id = (SELECT material_type.id FROM material_type WHERE material_type.name = monthly_checkouts_per_item_raw.material_type),
+    creator_id = (SELECT creator.id FROM creator WHERE creator.name = monthly_checkouts_per_item_raw.creator),
+    publisher_id = (SELECT creapublishertor.id FROM publisher WHERE publisher.name = monthly_checkouts_per_item_raw.publisher);
+
 -- TODO:
---      - populate material_type table and insert ids into raw table
---      - populate creator table and insert ids into raw table
---      - populate publisher table and insert ids into raw table
 --      - populate subjects table with distinct values (complex due to csv subject lists on items)
 --      - populate item table and put item_id on raw table
 --      - populate item_subject table
