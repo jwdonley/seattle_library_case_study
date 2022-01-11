@@ -24,8 +24,14 @@ ALTER TABLE monthly_checkouts_per_item_raw ADD creator_id int;
 ALTER TABLE monthly_checkouts_per_item_raw ADD publisher_id int;
 ALTER TABLE monthly_checkouts_per_item_raw ADD item_id int;
 
+-- populate usage_class table
+INSERT INTO usage_class (name) SELECT DISTINCT usage_class FROM monthly_checkouts_per_item_raw;
+
+-- insert usage_class ids into raw table
+UPDATE monthly_checkouts_per_item_raw SET usage_class_id = 
+(SELECT usage_class.id FROM usage_class WHERE usage_class.name = monthly_checkouts_per_item_raw.usage_class);
+
 -- TODO:
---      - populate usage_class table and insert ids into raw table
 --      - populate material_type table and insert ids into raw table
 --      - populate creator table and insert ids into raw table
 --      - populate publisher table and insert ids into raw table
