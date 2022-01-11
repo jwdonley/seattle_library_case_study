@@ -34,10 +34,6 @@ UPDATE monthly_checkouts_per_item_raw SET usage_class_id =
 -- populate material_type table
 INSERT INTO material_type (name) SELECT DISTINCT material_type FROM monthly_checkouts_per_item_raw;
 
-----v  todo
-
-SELECT COUNT(DISTINCT creator) FROM monthly_checkouts_per_item_raw;
-
 -- populate creator table (got an issue with a null creator in here)
 INSERT INTO creator (name) SELECT DISTINCT creator FROM monthly_checkouts_per_item_raw;
 
@@ -48,13 +44,18 @@ INSERT INTO publisher (name) SELECT DISTINCT publisher FROM monthly_checkouts_pe
 -- insert creator ids into raw table
 -- insert publisher ids into raw table
 UPDATE monthly_checkouts_per_item_raw 
-  SET
-    material_type_id = (SELECT material_type.id FROM material_type WHERE material_type.name = monthly_checkouts_per_item_raw.material_type),
-    creator_id = (SELECT creator.id FROM creator WHERE creator.name = monthly_checkouts_per_item_raw.creator),
-    publisher_id = (SELECT creapublishertor.id FROM publisher WHERE publisher.name = monthly_checkouts_per_item_raw.publisher);
+SET material_type_id = (SELECT material_type.id FROM material_type WHERE material_type.name = monthly_checkouts_per_item_raw.material_type);
+
+-- ----------v      TODO
+
+UPDATE monthly_checkouts_per_item_raw 
+SET creator_id = (SELECT creator.id FROM creator WHERE creator.name = monthly_checkouts_per_item_raw.creator),
+UPDATE monthly_checkouts_per_item_raw 
+SET publisher_id = (SELECT publisher.id FROM publisher WHERE publisher.name = monthly_checkouts_per_item_raw.publisher);
 
 -- TODO:
---      - populate subjects table with distinct values (complex due to csv subject lists on items)
 --      - populate item table and put item_id on raw table
+--      - populate subjects table with distinct values (complex due to csv subject lists on items)
 --      - populate item_subject table
 --      - drop monthly_checkouts_per_item_raw table
+--      - delete '[not listed]' entries from creator and publisher tables.

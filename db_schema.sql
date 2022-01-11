@@ -31,7 +31,7 @@ CREATE TABLE material_type (
 -- Create creator table 
 CREATE TABLE creator (
     id serial,
-    name varchar(64) NOT NULL,
+    name varchar(256) NOT NULL,
     PRIMARY KEY(id)
 );
 
