@@ -45,13 +45,13 @@ INSERT INTO publisher (name) SELECT DISTINCT publisher FROM monthly_checkouts_pe
 -- insert publisher ids into raw table
 UPDATE monthly_checkouts_per_item_raw 
 SET material_type_id = (SELECT material_type.id FROM material_type WHERE material_type.name = monthly_checkouts_per_item_raw.material_type);
-
--- ----------v      TODO
-
-UPDATE monthly_checkouts_per_item_raw 
-SET creator_id = (SELECT creator.id FROM creator WHERE creator.name = monthly_checkouts_per_item_raw.creator),
 UPDATE monthly_checkouts_per_item_raw 
 SET publisher_id = (SELECT publisher.id FROM publisher WHERE publisher.name = monthly_checkouts_per_item_raw.publisher);
+
+-------------v      TODO
+
+UPDATE monthly_checkouts_per_item_raw 
+SET creator_id = (SELECT creator.id FROM creator WHERE creator.name = monthly_checkouts_per_item_raw.creator);
 
 -- TODO:
 --      - populate item table and put item_id on raw table
