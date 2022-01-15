@@ -46,7 +46,7 @@ INSERT INTO publisher (name) SELECT DISTINCT publisher FROM monthly_checkouts_pe
 UPDATE monthly_checkouts_per_item_raw 
 SET material_type_id = (SELECT material_type.id FROM material_type WHERE material_type.name = monthly_checkouts_per_item_raw.material_type);
 
--------------v      TODO
+-------------v      These next commands were taking more than 24+ hours to run before I canceled them. Needed to re-think my approach to the issue.
 
 UPDATE monthly_checkouts_per_item_raw 
 SET publisher_id = (SELECT publisher.id FROM publisher WHERE publisher.name = monthly_checkouts_per_item_raw.publisher);
