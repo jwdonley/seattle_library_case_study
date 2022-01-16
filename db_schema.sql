@@ -25,7 +25,7 @@ CREATE TABLE material_type (
 -- Create subject table
 CREATE TABLE subject (
     id serial,
-    name varchar(64) NOT NULL,
+    name varchar(256) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -33,9 +33,9 @@ CREATE TABLE subject (
 CREATE TABLE monthly_checkout (
     id serial,
     year INT NOT NULL,
-    month INT NOT NULL,
+    MONTH INT NOT NULL,
     checkouts INT NOT NULL,
-    publication_year INT,
+    publication_year VARCHAR(256),
     usage_class_id INT NOT NULL,
     material_type_id INT NOT NULL,
     PRIMARY KEY(id),
