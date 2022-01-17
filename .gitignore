@@ -3,3 +3,4 @@ __pycache__/*
 hidden.py
 raw_data
 venv
+.vscode
