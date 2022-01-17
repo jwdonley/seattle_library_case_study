@@ -97,7 +97,6 @@ ALTER TABLE
 ADD
     subjects text NULL;
 
---------------TODO-------------v
 -- fill monthly_checkout table
 INSERT INTO
     monthly_checkout (
@@ -121,21 +120,24 @@ INSERT INTO
             monthly_checkouts_per_item_raw
     );
 
+--------------TODO-------------v
+
 -- populate monthly checkout subject junction table
-INSERT INTO
-    monthly_checkout_subject (monthly_checkout_id, subject_id) (
-        SELECT
-            mc.id,
-            s.id
-        FROM
-            monthly_checkout AS mc,
-            subject AS s
-        WHERE
-            s.name IN (
-                SELECT
-                    unnest(string_to_array(mc.subjects, ', '))
-            )
-);
+-- this one takes too long, I'll need to write a python script to tackle this in chunks
+-- INSERT INTO
+--     monthly_checkout_subject (monthly_checkout_id, subject_id) (
+--         SELECT
+--             mc.id,
+--             s.id
+--         FROM
+--             monthly_checkout AS mc,
+--             subject AS s
+--         WHERE
+--             s.name IN (
+--                 SELECT
+--                     unnest(string_to_array(mc.subjects, ', '))
+--             )
+-- );
 
 -- drop temporary subjects column
 ALTER TABLE
