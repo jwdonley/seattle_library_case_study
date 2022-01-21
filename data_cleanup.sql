@@ -34,3 +34,30 @@ DELETE FROM
     subject
 WHERE
     char_length(name) > 70;
+
+-- remove all but the top 5000 subjects
+DELETE FROM
+    monthly_checkout_subject o
+WHERE
+    o.subject_id NOT IN (
+        SELECT
+            mcs.subject_id
+        FROM
+            monthly_checkout_subject mcs
+        GROUP BY
+            mcs.subject_id
+        ORDER BY
+            count(mcs.monthly_checkout_id) DESC
+        LIMIT
+            5000
+    );
+
+DELETE FROM
+    subject s
+WHERE
+    s.id NOT IN (
+        SELECT
+            mcs.subject_id
+        FROM
+            monthly_checkout_subject mcs
+    );

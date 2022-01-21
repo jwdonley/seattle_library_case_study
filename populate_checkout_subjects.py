@@ -31,7 +31,7 @@ print('max id = ', max_id)
 if max_id is None:
     max_id = 1
 
-limit = 1000000
+limit = 300000
 
 # get monthly_checkout rows
 sql = '''
@@ -86,7 +86,7 @@ for result in results:
             INSERT INTO monthly_checkout_subject (monthly_checkout_id, subject_id)
             VALUES (%s, %s)
         '''
-        print(monthly_checkout_id, '-', subject, '-', subject_cache[subject])
+        #print(monthly_checkout_id, '-', subject, '-', subject_cache[subject])
         try:
             cur.execute(sql, (monthly_checkout_id, subject_cache[subject]))
         except:
@@ -96,7 +96,7 @@ for result in results:
 
     if rowsNotCommitted > 25:
         conn.commit()
-        print('--commit--')
+        #print('--commit--')
         rowsNotCommitted = 0
         
 print(len(subject_cache))
