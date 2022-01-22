@@ -51,13 +51,3 @@ WHERE
         LIMIT
             5000
     );
-
-DELETE FROM
-    subject s
-WHERE
-    s.id NOT IN (
-        SELECT
-            mcs.subject_id
-        FROM
-            monthly_checkout_subject mcs
-    );
