@@ -65,6 +65,16 @@ INSERT INTO
             checkouts DESC
     );
 
+SELECT
+    make_date(rmcpm.year, rmcpm.month, 1) AS MONTH,
+    media,
+    checkouts
+FROM
+    report_monthly_checkouts_per_media rmcpm
+ORDER BY
+    MONTH DESC,
+    media;
+
 -- MONTHLY FICTION VS NON-FICTION
 SELECT
     *
@@ -118,7 +128,9 @@ INSERT INTO
 
 -- MONTHLY EBOOK VS PRINT
 SELECT
-    *
+    make_date(rmcpm."year", rmcpm."month", 1) AS MONTH,
+    rmcpm.media,
+    rmcpm.checkouts
 FROM
     report_monthly_checkouts_per_media rmcpm
 WHERE
@@ -245,8 +257,7 @@ VALUES
 
 -- MONTHLY CHECKOUTS FOR TOP FICTION SUBJECTS
 SELECT
-    max(rmcps."year"),
-    max(rmcps."month"),
+    make_date(max(rmcps."year"), max(rmcps."month"), 1) AS MONTH,
     max(lower(rmcps.subject)) AS subject,
     sum(rmcps.checkouts) AS checkouts
 FROM
@@ -268,10 +279,8 @@ ORDER BY
     checkouts DESC;
 
 -- MONTHLY CHECKOUTS FOR TOP NONFICTION SUBJECTS
-
 SELECT
-    max(rmcps."year"),
-    max(rmcps."month"),
+    make_date(max(rmcps."year"), max(rmcps."month"), 1) AS MONTH,
     max(lower(rmcps.subject)) AS subject,
     sum(rmcps.checkouts) AS checkouts
 FROM
