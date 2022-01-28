@@ -25,3 +25,20 @@ And also for Non-Fiction Subjects:
 
 ![non-fiction subjects](graphs/Top_Non-Fiction.png)
 
+It is also interesting to look at the rise of ebook circulation since the pandemic:
+
+![ebooks](graphs/ebook_vs_book.png)
+
+As well as fiction circulation vs non-fiction:
+
+![fiction vs non-fiction](graphs/fic_vs_non.png)
+
+Here is also a representation of what subjects/genres make up the majority of circulation:
+
+![fiction pie chart](graphs/FicPie.png)
+
+![nonfiction pie chart](graphs/NonFicPie.png)
+
+# Closing Thoughts
+
+I learned a ton taking on this project about processing large amounts of data as well as honed my SQL and Python skills. If I were to take this on again there are a couple things I would do differently. For instance, I would lowercase all of the subjects as I insert them into their own table to help reduce the number of unique subjects. I'd also attempt to do some more fine grained data analysis to try and see if there are any subjects that have grown exponentially, but are just hidden in the current analysis due to the top subjects/genres.
